@@ -15,7 +15,9 @@ RUN cd $(npm root -g)/npm && npm install fs-extra && sed -i -e s/graceful-fs/fs-
 
 # Install dependencies at specified branch
 WORKDIR /src/blockstack-deps
+ADD https://api.github.com/repos/blockstack/blockstack-storage-js/git/refs/heads/develop-multiplayer-storage storage-version.json
 RUN git clone https://github.com/blockstack/blockstack-storage-js.git -b develop-multiplayer-storage
+ADD https://api.github.com/repos/blockstack/blockstack.js/git/refs/heads/develop-keyfile blockstack-version.json
 RUN git clone https://github.com/blockstack/blockstack.js.git -b develop-keyfile
 RUN cd blockstack-storage-js && npm i && npm run compile
 RUN cd blockstack.js && npm install ../blockstack-storage-js/ && npm i && npm install ../blockstack-storage-js/  && npm run compile
